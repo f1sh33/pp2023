@@ -1,6 +1,7 @@
 classStudent = []
 courses = []
 
+# Construct a Student dict to push to a ClassStudent list
 def construct_student(id, name, dob):
     data = {
         "id": id,
@@ -10,6 +11,7 @@ def construct_student(id, name, dob):
     }
     return data
 
+# Construct a Course dict to push to a Courses list
 def construct_course(id, name):
     data = {
         "id": id,
@@ -17,12 +19,14 @@ def construct_course(id, name):
     }
     return data
 
+# Find a course based on a passed ID
 def find_course(id, courses):
     for course in courses:
         if course["id"] == id:
             return course
     return 0
 
+# List all Courses
 def list_course(courses):
     print("All Courses Information: ")
     print("------------------------")
@@ -32,6 +36,7 @@ def list_course(courses):
     print("------------------------")
     print("")
 
+# List all Students
 def list_student(students):
     print("All Student Information: ")
     print("------------------------")
@@ -43,6 +48,7 @@ def list_student(students):
     print("------------------------")
     print("")
 
+# List mark of students based on passed Course ID
 def list_mark(students, courseId):
     course = find_course(courseId, courses)
     courseName = course["name"]
@@ -74,6 +80,7 @@ for course in range(0, courseNumber):
     print("")
     courses.append(construct_course(id, name))  
 
+# Select course for mark inputting
 for i in range(0, courseNumber):
     while (True):
         desiredCourseId = input("Enter the ID of the course you want to input marks: ")
@@ -91,9 +98,9 @@ for i in range(0, courseNumber):
         }
         student["classes"].append(data);
 
-
 list_course(courses)
 list_student(classStudent)
+
 while (True):
     courseId = input("Enter the ID of the course you want to list mark: ")
     if (not find_course(courseId, courses)):
