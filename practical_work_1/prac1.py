@@ -2,7 +2,7 @@ classStudent = []
 courses = []
 
 # Construct a Student dict to push to a ClassStudent list
-def construct_student(id, name, dob):
+def constructStudent(id, name, dob):
     data = {
         "id": id,
         "name": name,
@@ -12,7 +12,7 @@ def construct_student(id, name, dob):
     return data
 
 # Construct a Course dict to push to a Courses list
-def construct_course(id, name):
+def constructCourse(id, name):
     data = {
         "id": id,
         "name": name
@@ -20,14 +20,14 @@ def construct_course(id, name):
     return data
 
 # Find a course based on a passed ID
-def find_course(id, courses):
+def findCourse(id, courses):
     for course in courses:
         if course["id"] == id:
             return course
     return 0
 
 # List all Courses
-def list_course(courses):
+def listCourse(courses):
     print("All Courses Information: ")
     print("------------------------")
     for course in courses:
@@ -37,7 +37,7 @@ def list_course(courses):
     print("")
 
 # List all Students
-def list_student(students):
+def listStudent(students):
     print("All Student Information: ")
     print("------------------------")
     for student in students:
@@ -49,8 +49,8 @@ def list_student(students):
     print("")
 
 # List mark of students based on passed Course ID
-def list_mark(students, courseId):
-    course = find_course(courseId, courses)
+def listMark(students, courseId):
+    course = findCourse(courseId, courses)
     courseName = course["name"]
     print(f"Mark Information for course {courseId} - {courseName}:")
     for student in students:
@@ -68,7 +68,7 @@ for student in range(0, studentNumber):
     name = input(f"Enter Name of the {student+1} student: ")
     dob = input(f"Enter DoB of the {student+1} student: ")
     print("")
-    classStudent.append(construct_student(id, name, dob));
+    classStudent.append(constructStudent(id, name, dob));
 
 # Get input data for all Courses
 
@@ -78,32 +78,32 @@ for course in range(0, courseNumber):
     id = input(f"Enter ID of the {course+1} course: ")
     name = input(f"Enter name of the {course+1} course: ")
     print("")
-    courses.append(construct_course(id, name))  
+    courses.append(constructCourse(id, name))  
 
 # Select course for mark inputting
 for i in range(0, courseNumber):
     while (True):
         desiredCourseId = input("Enter the ID of the course you want to input marks: ")
-        if (find_course(desiredCourseId, courses)):
+        if (findCourse(desiredCourseId, courses)):
             break
         else:
             print("The course you entered is not available! Please enter another name...")
     
     for student in classStudent:
         name = student["name"]
-        student_mark = input(f"Enter {name}'s mark for {desiredCourseId} course: ")
+        studentMark = input(f"Enter {name}'s mark for {desiredCourseId} course: ")
         data = {
             "id": desiredCourseId,
-            "mark": student_mark
+            "mark": studentMark
         }
         student["classes"].append(data);
 
-list_course(courses)
-list_student(classStudent)
+listCourse(courses)
+listStudent(classStudent)
 
 while (True):
     courseId = input("Enter the ID of the course you want to list mark: ")
-    if (not find_course(courseId, courses)):
+    if (not findCourse(courseId, courses)):
         print("The course you entered is not available! Please enter another name...")
         continue
-    list_mark(classStudent, courseId)
+    listMark(classStudent, courseId)
