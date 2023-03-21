@@ -5,7 +5,7 @@ class Student:
         self.date_of_birth = date_of_birth
 
     def __str__(self):
-        return f"{self.name} ({self.student_id})"
+        return f"{self.name} - {self.student_id}"
 
 class Course:
     def __init__(self, course_id, name):
@@ -21,7 +21,7 @@ class Course:
         self.students[student_id]['marks'][self.course_id] = mark
 
     def list_students(self):
-        for student_id, student_info in self.students.items():
+        for student_info in self.students.values():
             print(student_info['name'])
 
     def list_marks(self):
@@ -49,14 +49,15 @@ class MarkManagement:
             self.courses[course_id] = Course(course_id, name)
 
     def input_students_to_courses(self):
-        for course_id, course in self.courses.items():
-            for student_id, student in self.students.items():
+        for course in self.courses.values():
+            for student in self.students.values():
                 course.add_student(student)
 
     def input_marks(self):
-        for course_id, course in self.courses.items():
+        for course in self.courses.values():
             for student_id in course.students.keys():
                 course.input_marks(student_id)
+
 
     def list_courses(self):
         print("Courses:")

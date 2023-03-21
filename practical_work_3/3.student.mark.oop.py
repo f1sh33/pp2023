@@ -1,3 +1,5 @@
+import numpy as np
+
 class Student:
     def __init__(self, name, student_id, date_of_birth):
         self.name = name
@@ -5,12 +7,13 @@ class Student:
         self.date_of_birth = date_of_birth
 
     def __str__(self):
-        return f"{self.name} ({self.student_id})"
+        return f"{self.name} - {self.student_id}"
 
 class Course:
-    def __init__(self, course_id, name):
+    def __init__(self, course_id, name, credit):
         self.course_id = course_id
         self.name = name
+        self.credit = credit
         self.students = {}
 
     def add_student(self, student):
@@ -20,8 +23,15 @@ class Course:
         mark = input(f"Enter mark for student {self.students[student_id]['name']} in {self.name}: ")
         self.students[student_id]['marks'][self.course_id] = mark
 
+    def get_credit(self):
+        return int(self.credit)
+
+    def return_mark(self, student_id):
+        mark = self.students[student_id]['marks'][self.course_id];
+        return int(mark)
+
     def list_students(self):
-        for student_id, student_info in self.students.items():
+        for student_info in self.students.values():
             print(student_info['name'])
 
     def list_marks(self):
@@ -46,17 +56,22 @@ class MarkManagement:
         for i in range(num_courses):
             course_id = input("Enter course ID: ")
             name = input("Enter course name: ")
-            self.courses[course_id] = Course(course_id, name)
+            credit = int(input("Enter number of credits for this course: "))
+            self.courses[course_id] = Course(course_id, name, credit)
 
     def input_students_to_courses(self):
-        for course_id, course in self.courses.items():
-            for student_id, student in self.students.items():
+        for course in self.courses.values():
+            for student in self.students.values():
                 course.add_student(student)
 
     def input_marks(self):
-        for course_id, course in self.courses.items():
+        for course in self.courses.values():
             for student_id in course.students.keys():
                 course.input_marks(student_id)
+
+    """ def calculate_gpa(self):
+        for student_id in self.students.keys():
+            credit_array = [for credit in self.courses.val] """
 
     def list_courses(self):
         print("Courses:")
@@ -73,6 +88,20 @@ class MarkManagement:
         for course in self.courses.values():
             print(course.name)
             course.list_marks()
+    
+    def list_gpa(self):
+        credit_array = []
+        for course in self.courses.values():
+            credit_array.append(course.get_credit())
+        for student_id, student in self.students.items():
+            marks = []
+            for course in self.courses.values():
+                marks.append(course.return_mark(student_id))
+            weighted_sum = np.array(marks) * np.array(credit_array)
+            total_weighted_sum = np.sum(weighted_sum)
+            total_credit = np.sum(credit_array)
+            gpa = total_weighted_sum/total_credit
+            print(f'GPA of Student {student_id} is {gpa}')
 
 mm = MarkManagement()
 
@@ -89,3 +118,4 @@ mm.input_marks()
 mm.list_courses()
 mm.list_students()
 mm.list_marks()
+mm.list_gpa()
